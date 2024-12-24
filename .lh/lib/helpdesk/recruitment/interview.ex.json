@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/helpdesk/recruitment/interview.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1733773076347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733773090177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,50 @@\n+defmodule Helpdesk.Recruitment.Interview do\n+  use Ash.Resource,\n+    otp_app: :helpdesk,\n+    domain: Helpdesk.Recruitment,\n+    extensions: [AshAdmin.Resource, AshJsonApi.Resource],\n+    data_layer: AshPostgres.DataLayer\n+\n+  json_api do\n+    type \"interview\"\n+  end\n+\n+  postgres do\n+    table \"interviews\"\n+    repo Helpdesk.Repo\n+  end\n+\n+  actions do\n+    defaults [:read, create: [], update: []]\n+  end\n+\n+  attributes do\n+    uuid_primary_key :id\n+\n+    attribute :scheduled_at, :utc_datetime do\n+      allow_nil? false\n+    end\n+\n+    attribute :location, :string\n+\n+    attribute :interviewer, :string do\n+      allow_nil? false\n+    end\n+\n+    attribute :status, :interview_status do\n+      allow_nil? false\n+    end\n+\n+    timestamps()\n+  end\n+\n+  relationships do\n+    belongs_to :job_application, Helpdesk.Recruitment.JobApplication do\n+      allow_nil? false\n+    end\n+\n+    belongs_to :user, Helpdesk.Organizational.User do\n+      allow_nil? false\n+    end\n+  end\n+end\n"
+                },
+                {
+                    "date": 1733780790608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,54 @@\n+defmodule Helpdesk.Recruitment.Interview do\n+  use Ash.Resource,\n+    otp_app: :helpdesk,\n+    domain: Helpdesk.Recruitment,\n+    extensions: [AshAdmin.Resource, AshJsonApi.Resource],\n+    data_layer: AshPostgres.DataLayer\n+\n+  json_api do\n+    type \"interview\"\n+  end\n+\n+  postgres do\n+    table \"interviews\"\n+    repo Helpdesk.Repo\n+  end\n+\n+  actions do\n+    defaults [\n+      :read,\n+      create: [:scheduled_at, :location, :interviewer, :status, :job_application_id, :user_id],\n+      update: [:scheduled_at, :location, :interviewer, :status, :job_application_id, :user_id]\n+    ]\n+  end\n+\n+  attributes do\n+    uuid_primary_key :id\n+\n+    attribute :scheduled_at, :utc_datetime do\n+      allow_nil? false\n+    end\n+\n+    attribute :location, :string\n+\n+    attribute :interviewer, :string do\n+      allow_nil? false\n+    end\n+\n+    attribute :status, :interview_status do\n+      allow_nil? false\n+    end\n+\n+    timestamps()\n+  end\n+\n+  relationships do\n+    belongs_to :job_application, Helpdesk.Recruitment.JobApplication do\n+      allow_nil? false\n+    end\n+\n+    belongs_to :user, Helpdesk.Organizational.User do\n+      allow_nil? false\n+    end\n+  end\n+end\n"
+                }
+            ],
+            "date": 1733773076347,
+            "name": "Commit-0",
+            "content": "defmodule Helpdesk.Recruitment.Interview do\n  use Ash.Resource,\n    otp_app: :helpdesk,\n    domain: Helpdesk.Recruitment,\n    extensions: [AshAdmin.Resource, AshJsonApi.Resource],\n    data_layer: AshPostgres.DataLayer\n\n  json_api do\n    type \"interview\"\n  end\n\n  postgres do\n    table \"interviews\"\n    repo Helpdesk.Repo\n  end\n\n  actions do\n    defaults [:read, create: [], update: []]\n  end\n\n  attributes do\n    uuid_primary_key :id\n\n    attribute :scheduled_at, :utc_datetime do\n      allow_nil? false\n    end\n\n    attribute :location, :string\n\n    attribute :interviewer, :string do\n      allow_nil? false\n    end\n\n    attribute :status, :interview_status do\n      allow_nil? false\n    end\n\n    timestamps()\n  end\n\n  relationships do\n    # belongs_to :job_application, Helpdesk.Recruitment.JobApplication do\n    # allow_nil? false\n    # end\n\n    belongs_to :user, Helpdesk.Organizational.User do\n      allow_nil? false\n    end\n  end\nend\n"
+        }
+    ]
+}

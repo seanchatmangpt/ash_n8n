@@ -1,0 +1,30 @@
+{
+    "sourceFile": "lib/helpdesk/organizational.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1733772669567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733773240285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,12 @@\n defmodule Helpdesk.Organizational do\n-  use Ash.Domain, extensions: [AshJsonApi.Domain]\n+  use Ash.Domain, extensions: [AshJsonApi.Domain, AshAdmin.Domain]\n \n+  admin do\n+    show?(true)\n+  end\n+\n   resources do\n     resource Helpdesk.Organizational.Company\n+    resource Helpdesk.Organizational.User\n   end\n end\n"
+                },
+                {
+                    "date": 1733780360072,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,17 @@\n defmodule Helpdesk.Organizational do\n   use Ash.Domain, extensions: [AshJsonApi.Domain, AshAdmin.Domain]\n \n+  json_api do\n+    routes do\n+      base_route \"/companies\", Helpdesk.Organizational.Company do\n+        get :read\n+        index :read\n+        post :create\n+      end\n+    end\n+  end\n+\n   admin do\n     show?(true)\n   end\n \n"
+                },
+                {
+                    "date": 1733780395678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,14 @@\n         get :read\n         index :read\n         post :create\n       end\n+\n+      base_route \"/user\", Helpdesk.Organizational.User do\n+        get :read\n+        index :read\n+        post :create\n+      end\n     end\n   end\n \n   admin do\n"
+                }
+            ],
+            "date": 1733772669567,
+            "name": "Commit-0",
+            "content": "defmodule Helpdesk.Organizational do\n  use Ash.Domain, extensions: [AshJsonApi.Domain]\n\n  resources do\n    resource Helpdesk.Organizational.Company\n  end\nend\n"
+        }
+    ]
+}

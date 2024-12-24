@@ -1,0 +1,38 @@
+{
+    "sourceFile": "lib/helpdesk/recruitment.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1733772625221,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733772697635,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n defmodule Helpdesk.Recruitment do\n   use Ash.Domain, extensions: [AshJsonApi.Domain]\n \n   resources do\n-    # resource Helpdesk.Recruitment.Application\n   end\n end\n"
+                },
+                {
+                    "date": 1733773222243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,15 @@\n defmodule Helpdesk.Recruitment do\n-  use Ash.Domain, extensions: [AshJsonApi.Domain]\n+  use Ash.Domain, extensions: [AshJsonApi.Domain, AshAdmin.Domain]\n \n+  admin do\n+    show?(true)\n+  end\n+\n   resources do\n+    resource Helpdesk.Recruitment.Applicant\n+    resource Helpdesk.Recruitment.Posting\n+    resource Helpdesk.Recruitment.Feedback\n+    resource Helpdesk.Recruitment.Interview\n+    resource Helpdesk.Recruitment.JobApplication\n   end\n end\n"
+                },
+                {
+                    "date": 1733781250389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,48 @@\n   admin do\n     show?(true)\n   end\n \n-  resources do\n+  json_api doresources do\n+    prefix \"/api\"\n+\n+    resources do\n+      resource Helpdesk.Recruitment.Applicant do\n+        type \"applicant\"\n+        routes do\n+          base \"/applicants\"\n+        end\n+      end\n+\n+      resource Helpdesk.Recruitment.Posting do\n+        type \"posting\"\n+        routes do\n+          base \"/postings\"\n+        end\n+      end\n+\n+      resource Helpdesk.Recruitment.Feedback do\n+        type \"feedback\"\n+        routes do\n+          base \"/feedbacks\"\n+        end\n+      end\n+\n+      resource Helpdesk.Recruitment.Interview do\n+        type \"interview\"\n+        routes do\n+          base \"/interviews\"\n+        end\n+      end\n+\n+      resource Helpdesk.Recruitment.JobApplication do\n+        type \"job_application\"\n+        routes do\n+          base \"/job_applications\"\n+        end\n+      end\n+    end\n+  end\n     resource Helpdesk.Recruitment.Applicant\n     resource Helpdesk.Recruitment.Posting\n     resource Helpdesk.Recruitment.Feedback\n     resource Helpdesk.Recruitment.Interview\n"
+                },
+                {
+                    "date": 1733781288350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,48 +4,9 @@\n   admin do\n     show?(true)\n   end\n \n-  json_api doresources do\n-    prefix \"/api\"\n-\n-    resources do\n-      resource Helpdesk.Recruitment.Applicant do\n-        type \"applicant\"\n-        routes do\n-          base \"/applicants\"\n-        end\n-      end\n-\n-      resource Helpdesk.Recruitment.Posting do\n-        type \"posting\"\n-        routes do\n-          base \"/postings\"\n-        end\n-      end\n-\n-      resource Helpdesk.Recruitment.Feedback do\n-        type \"feedback\"\n-        routes do\n-          base \"/feedbacks\"\n-        end\n-      end\n-\n-      resource Helpdesk.Recruitment.Interview do\n-        type \"interview\"\n-        routes do\n-          base \"/interviews\"\n-        end\n-      end\n-\n-      resource Helpdesk.Recruitment.JobApplication do\n-        type \"job_application\"\n-        routes do\n-          base \"/job_applications\"\n-        end\n-      end\n-    end\n-  end\n+  resources do\n     resource Helpdesk.Recruitment.Applicant\n     resource Helpdesk.Recruitment.Posting\n     resource Helpdesk.Recruitment.Feedback\n     resource Helpdesk.Recruitment.Interview\n"
+                },
+                {
+                    "date": 1733781342368,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,41 @@\n defmodule Helpdesk.Recruitment do\n   use Ash.Domain, extensions: [AshJsonApi.Domain, AshAdmin.Domain]\n \n+  json_api do\n+    routes do\n+      base_route \"/applicants\", Helpdesk.Recruitment.Applicant do\n+        get :read\n+        index :read\n+        post :create\n+      end\n+\n+      base_route \"/postings\", Helpdesk.Recruitment.Posting do\n+        get :read\n+        index :read\n+        post :create\n+      end\n+\n+      base_route \"/feedbacks\", Helpdesk.Recruitment.Feedback do\n+        get :read\n+        index :read\n+        post :create\n+      end\n+\n+      base_route \"/interviews\", Helpdesk.Recruitment.Interview do\n+        get :read\n+        index :read\n+        post :create\n+      end\n+\n+      base_route \"/job_applications\", Helpdesk.Recruitment.JobApplication do\n+        get :read\n+        index :read\n+        post :create\n+      end\n+    end\n+  end\n+\n   admin do\n     show?(true)\n   end\n \n"
+                }
+            ],
+            "date": 1733772625221,
+            "name": "Commit-0",
+            "content": "defmodule Helpdesk.Recruitment do\n  use Ash.Domain, extensions: [AshJsonApi.Domain]\n\n  resources do\n    # resource Helpdesk.Recruitment.Application\n  end\nend\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "lib/helpdesk/support/ticket.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1733696675165,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733696691974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,12 @@\n     extensions: [AshJsonApi.Resource],\n     otp_app: :helpdesk,\n     domain: Helpdesk.Support\n \n+  json_api do\n+    type \"ticket\"\n+  end\n+\n   actions do\n     defaults [:read]\n \n     create :open do\n"
+                }
+            ],
+            "date": 1733696675165,
+            "name": "Commit-0",
+            "content": "defmodule Helpdesk.Support.Ticket do\n  use Ash.Resource,\n  extensions: [AshJsonApi.Resource],\n    otp_app: :helpdesk,\n    domain: Helpdesk.Support\n\n  actions do\n    defaults [:read]\n\n    create :open do\n      accept [:subject]\n    end\n\n    update :close do\n      accept []\n\n      validate attribute_does_not_equal(:status, :closed) do\n        message \"Ticket is already closed\"\n      end\n\n      change set_attribute(:status, :closed)\n    end\n\n    update :assign do\n      accept [:representative_id]\n    end\n  end\n\n  attributes do\n    uuid_primary_key :id\n\n    attribute :subject, :string do\n      allow_nil? false\n      public? true\n    end\n\n    attribute :status, :ticket_status do\n      default :open\n      allow_nil? false\n    end\n  end\n\n  relationships do\n    belongs_to :representative, Helpdesk.Support.Representative do\n      public? true\n    end\n  end\nend\n"
+        }
+    ]
+}

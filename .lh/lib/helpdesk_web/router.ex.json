@@ -1,0 +1,22 @@
+{
+    "sourceFile": "lib/helpdesk_web/router.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1733773368421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733773377324,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,14 @@\n \n     get \"/\", PageController, :home\n   end\n \n+  scope \"/\" do\n+    pipe_through [:browser]\n+\n+    ash_admin(\"/admin\")\n+  end\n+\n   # Other scopes may use custom stacks.\n   # scope \"/api\", HelpdeskWeb do\n   #   pipe_through :api\n   # end\n"
+                }
+            ],
+            "date": 1733773368421,
+            "name": "Commit-0",
+            "content": "defmodule HelpdeskWeb.Router do\n  use HelpdeskWeb, :router\n\n  import AshAdmin.Router\n\n  pipeline :browser do\n    plug :accepts, [\"html\"]\n    plug :fetch_session\n    plug :fetch_live_flash\n    plug :put_root_layout, html: {HelpdeskWeb.Layouts, :root}\n    plug :protect_from_forgery\n    plug :put_secure_browser_headers\n  end\n\n  pipeline :api do\n    plug :accepts, [\"json\"]\n  end\n\n  scope \"/api/json\" do\n    pipe_through [:api]\n\n    forward \"/swaggerui\",\n            OpenApiSpex.Plug.SwaggerUI,\n            path: \"/api/json/open_api\",\n            default_model_expand_depth: 4\n\n    forward \"/\", HelpdeskWeb.AshJsonApiRouter\n  end\n\n  scope \"/\", HelpdeskWeb do\n    pipe_through :browser\n\n    get \"/\", PageController, :home\n  end\n\n  # Other scopes may use custom stacks.\n  # scope \"/api\", HelpdeskWeb do\n  #   pipe_through :api\n  # end\n\n  # Enable LiveDashboard and Swoosh mailbox preview in development\n  if Application.compile_env(:helpdesk, :dev_routes) do\n    # If you want to use the LiveDashboard in production, you should put\n    # it behind authentication and allow only admins to access it.\n    # If your application does not have an admins-only section yet,\n    # you can use Plug.BasicAuth to set up some basic authentication\n    # as long as you are also using SSL (which you should anyway).\n    import Phoenix.LiveDashboard.Router\n\n    scope \"/dev\" do\n      pipe_through :browser\n\n      live_dashboard \"/dashboard\", metrics: HelpdeskWeb.Telemetry\n      forward \"/mailbox\", Plug.Swoosh.MailboxPreview\n    end\n  end\nend\n"
+        }
+    ]
+}

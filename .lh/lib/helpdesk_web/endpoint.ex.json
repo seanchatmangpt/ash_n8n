@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/helpdesk_web/endpoint.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1733698284830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733698305877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n   plug Corsica,\n     origins: [\"http://localhost:3000\"],  # The allowed origins\n     allow_headers: [\"content-type\", \"authorization\", \"accept\"],  # Allowed headers\n     allow_credentials: true,  # Allow credentials (e.g., cookies, authorization headers)\n-    max_age: 86400,  # Cache preflight responses for 24 hours\n+    max_age: 86400  # Cache preflight responses for 24 hours\n \n   plug Plug.MethodOverride\n   plug Plug.Head\n   plug Plug.Session, @session_options\n"
+                },
+                {
+                    "date": 1733698766710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n     json_decoder: Phoenix.json_library()\n \n   plug Corsica,\n     # The allowed origins\n-    origins: [\"http://localhost:3000\"],\n+    origins: [\"http://localhost:3000\", \"http://0.0.0.0:3000\"],\n     # Allowed headers\n     allow_headers: [\"content-type\", \"authorization\", \"accept\"],\n     # Allow credentials (e.g., cookies, authorization headers)\n     allow_credentials: true,\n"
+                }
+            ],
+            "date": 1733698284830,
+            "name": "Commit-0",
+            "content": "defmodule HelpdeskWeb.Endpoint do\n  use Phoenix.Endpoint, otp_app: :helpdesk\n\n  # The session will be stored in the cookie and signed,\n  # this means its contents can be read but not tampered with.\n  # Set :encryption_salt if you would also like to encrypt it.\n  @session_options [\n    store: :cookie,\n    key: \"_helpdesk_key\",\n    signing_salt: \"KFp/ognK\",\n    same_site: \"Lax\"\n  ]\n\n  socket \"/live\", Phoenix.LiveView.Socket,\n    websocket: [connect_info: [session: @session_options]],\n    longpoll: [connect_info: [session: @session_options]]\n\n  # Serve at \"/\" the static files from \"priv/static\" directory.\n  #\n  # You should set gzip to true if you are running phx.digest\n  # when deploying your static files in production.\n  plug Plug.Static,\n    at: \"/\",\n    from: :helpdesk,\n    gzip: false,\n    only: HelpdeskWeb.static_paths()\n\n  # Code reloading can be explicitly enabled under the\n  # :code_reloader configuration of your endpoint.\n  if code_reloading? do\n    socket \"/phoenix/live_reload/socket\", Phoenix.LiveReloader.Socket\n    plug Phoenix.LiveReloader\n    plug Phoenix.CodeReloader\n    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :helpdesk\n  end\n\n  plug Phoenix.LiveDashboard.RequestLogger,\n    param_key: \"request_logger\",\n    cookie_key: \"request_logger\"\n\n  plug Plug.RequestId\n  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]\n\n  plug Plug.Parsers,\n    parsers: [:urlencoded, :multipart, :json, AshJsonApi.Plug.Parser],\n    pass: [\"*/*\"],\n    json_decoder: Phoenix.json_library()\n\n  plug Corsica,\n    origins: [\"http://localhost:3000\"],  # The allowed origins\n    allow_headers: [\"content-type\", \"authorization\", \"accept\"],  # Allowed headers\n    allow_credentials: true,  # Allow credentials (e.g., cookies, authorization headers)\n    max_age: 86400,  # Cache preflight responses for 24 hours\n\n  plug Plug.MethodOverride\n  plug Plug.Head\n  plug Plug.Session, @session_options\n  plug HelpdeskWeb.Router\nend\n"
+        }
+    ]
+}

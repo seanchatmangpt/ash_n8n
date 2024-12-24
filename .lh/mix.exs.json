@@ -1,0 +1,22 @@
+{
+    "sourceFile": "mix.exs",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1733696848120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733698175935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,11 @@\n       {:gettext, \"~> 0.20\"},\n       {:jason, \"~> 1.2\"},\n       {:dns_cluster, \"~> 0.1.1\"},\n       {:bandit, \"~> 1.5\"},\n-      {:ymlr, \"~> 2.0\"}\n+      {:ymlr, \"~> 2.0\"},\n+          {:corsica, \"~> 2.0\"}\n+\n     ]\n   end\n \n   # Aliases are shortcuts or tasks specific to the current project.\n"
+                }
+            ],
+            "date": 1733696848120,
+            "name": "Commit-0",
+            "content": "defmodule Helpdesk.MixProject do\n  use Mix.Project\n\n  def project do\n    [\n      app: :helpdesk,\n      version: \"0.1.0\",\n      elixir: \"~> 1.14\",\n      elixirc_paths: elixirc_paths(Mix.env()),\n      start_permanent: Mix.env() == :prod,\n      consolidate_protocols: Mix.env() != :dev,\n      aliases: aliases(),\n      deps: deps()\n    ]\n  end\n\n  # Configuration for the OTP application.\n  #\n  # Type `mix help compile.app` for more information.\n  def application do\n    [\n      mod: {Helpdesk.Application, []},\n      extra_applications: [:logger, :runtime_tools]\n    ]\n  end\n\n  # Specifies which paths to compile per environment.\n  defp elixirc_paths(:test), do: [\"lib\", \"test/support\"]\n  defp elixirc_paths(_), do: [\"lib\"]\n\n  # Specifies your project dependencies.\n  #\n  # Type `mix help deps` for examples and options.\n  defp deps do\n    [\n      {:open_api_spex, \"~> 3.0\"},\n      {:ash_json_api, \"~> 1.0\"},\n      {:ash_phoenix, \"~> 2.0\"},\n      {:ash_postgres, \"~> 2.0\"},\n      {:ash, \"~> 3.0\"},\n      {:igniter, \"~> 0.3\"},\n      {:phoenix, \"~> 1.7.17\"},\n      {:phoenix_ecto, \"~> 4.5\"},\n      {:ecto_sql, \"~> 3.10\"},\n      {:postgrex, \">= 0.0.0\"},\n      {:phoenix_html, \"~> 4.1\"},\n      {:phoenix_live_reload, \"~> 1.2\", only: :dev},\n      {:phoenix_live_view, \"~> 1.0.0\"},\n      {:floki, \">= 0.30.0\", only: :test},\n      {:phoenix_live_dashboard, \"~> 0.8.3\"},\n      {:esbuild, \"~> 0.8\", runtime: Mix.env() == :dev},\n      {:tailwind, \"~> 0.2\", runtime: Mix.env() == :dev},\n      {:heroicons,\n       github: \"tailwindlabs/heroicons\",\n       tag: \"v2.1.1\",\n       sparse: \"optimized\",\n       app: false,\n       compile: false,\n       depth: 1},\n      {:swoosh, \"~> 1.5\"},\n      {:finch, \"~> 0.13\"},\n      {:telemetry_metrics, \"~> 1.0\"},\n      {:telemetry_poller, \"~> 1.0\"},\n      {:gettext, \"~> 0.20\"},\n      {:jason, \"~> 1.2\"},\n      {:dns_cluster, \"~> 0.1.1\"},\n      {:bandit, \"~> 1.5\"},\n          {:ymlr, \"~> 2.0\"}\n\n    ]\n  end\n\n  # Aliases are shortcuts or tasks specific to the current project.\n  # For example, to install project dependencies and perform other setup tasks, run:\n  #\n  #     $ mix setup\n  #\n  # See the documentation for `Mix` for more info on aliases.\n  defp aliases do\n    [\n      setup: [\"deps.get\", \"ash.setup\", \"assets.setup\", \"assets.build\", \"run priv/repo/seeds.exs\"],\n      \"ecto.setup\": [\"ecto.create\", \"ecto.migrate\", \"run priv/repo/seeds.exs\"],\n      \"ecto.reset\": [\"ecto.drop\", \"ecto.setup\"],\n      test: [\"ash.setup --quiet\", \"test\"],\n      \"assets.setup\": [\"tailwind.install --if-missing\", \"esbuild.install --if-missing\"],\n      \"assets.build\": [\"tailwind helpdesk\", \"esbuild helpdesk\"],\n      \"assets.deploy\": [\n        \"tailwind helpdesk --minify\",\n        \"esbuild helpdesk --minify\",\n        \"phx.digest\"\n      ]\n    ]\n  end\nend\n"
+        }
+    ]
+}

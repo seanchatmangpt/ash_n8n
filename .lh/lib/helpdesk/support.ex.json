@@ -1,0 +1,22 @@
+{
+    "sourceFile": "lib/helpdesk/support.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1733696592323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733773258990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n defmodule Helpdesk.Support do\n-  use Ash.Domain, extensions: [AshJsonApi.Domain]\n+  use Ash.Domain, extensions: [AshJsonApi.Domain, AshAdmin.Domain]\n \n   json_api do\n     routes do\n       # in the domain `base_route` acts like a scope\n@@ -11,8 +11,12 @@\n       end\n     end\n   end\n \n+  admin do\n+    show?(true)\n+  end\n+\n   resources do\n     resource Helpdesk.Support.Ticket\n     resource Helpdesk.Support.Representative\n   end\n"
+                }
+            ],
+            "date": 1733696592323,
+            "name": "Commit-0",
+            "content": "defmodule Helpdesk.Support do\n  use Ash.Domain, extensions: [AshJsonApi.Domain]\n\n  json_api do\n    routes do\n      # in the domain `base_route` acts like a scope\n      base_route \"/tickets\", Helpdesk.Support.Ticket do\n        get :read\n        index :read\n        post :open\n      end\n    end\n  end\n\n  resources do\n    resource Helpdesk.Support.Ticket\n    resource Helpdesk.Support.Representative\n  end\nend\n"
+        }
+    ]
+}

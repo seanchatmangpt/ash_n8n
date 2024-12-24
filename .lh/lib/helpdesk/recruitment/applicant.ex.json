@@ -1,0 +1,18 @@
+{
+    "sourceFile": "lib/helpdesk/recruitment/applicant.ex",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1733780636909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1733780636909,
+            "name": "Commit-0",
+            "content": "defmodule Helpdesk.Recruitment.Applicant do\n  use Ash.Resource,\n    otp_app: :helpdesk,\n    domain: Helpdesk.Recruitment,\n    extensions: [AshAdmin.Resource, AshJsonApi.Resource],\n    data_layer: AshPostgres.DataLayer\n\n  json_api do\n    type \"applicant\"\n  end\n\n  postgres do\n    table \"applicants\"\n    repo Helpdesk.Repo\n  end\n\n  actions do\n    defaults [\n      :read,\n      create: [:first_name, :last_name, :email, :phone, :resume_url, :linkedin_profile],\n      update: [:first_name, :last_name, :email, :phone, :resume_url, :linkedin_profile]\n    ]\n  end\n\n  attributes do\n    uuid_primary_key :id\n\n    attribute :first_name, :string do\n      allow_nil? false\n    end\n\n    attribute :last_name, :string do\n      allow_nil? false\n    end\n\n    attribute :email, :string do\n      allow_nil? false\n      public? true\n    end\n\n    attribute :phone, :string\n\n    attribute :resume_url, :string do\n      public? true\n    end\n\n    attribute :linkedin_profile, :string\n    timestamps()\n  end\nend\n"
+        }
+    ]
+}
